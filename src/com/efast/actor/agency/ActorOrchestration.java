@@ -1,5 +1,8 @@
-package com.efast.actor;
+package com.efast.actor.agency;
 
+import com.efast.actor.Actor;
+
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
@@ -28,15 +31,7 @@ public class ActorOrchestration {
         LOGGER.info("Actor " + actor.actorId() + " registered");
     }
 
-    public static void sendMail(MailPackage mailPackage) {
-        if (mailPackage == null) {
-            throw new RuntimeException("Can't process mail package null");
-        }
-
-        if (mailPackage.getReceiverId() == null || mailPackage.getReceiverId().isEmpty()) {
-            throw new RuntimeException("Can't process receiver empty");
-        }
-
-        actors.get(mailPackage.getReceiverId()).receive(mailPackage);
+    public static Optional<Actor> getActor(String id) {
+        return Optional.ofNullable(actors.get(id));
     }
 }
